@@ -22,10 +22,16 @@ class ApiResource:
     def _parse_response(self, response, action: str):
         response_key = self.actions_config[action].get("response_key")
         if response_key:
+            if not response_key in response:
+                if response.get("message"):
+                    raise ValueError(response.get("message"))
+                if response.get("errors"):
+                    raise ValueError(response.get("errors"))
+                raise ValueError(f"Response key '{response_key}' not found in response")
             response_data = response.get(response_key, response)
         else:
             response_data = response
-        model = self.actions_config[action]["model"]
+        model = self.actions_config[action]["response_model"]
         return model.model_validate(response_data)
 
     def _prepare_data(self, data: BaseModel):
@@ -51,6 +57,7 @@ class ApiResource:
         response = self.request_method(
             "POST", self.endpoint, json=self._prepare_data(data)
         )
+        # TODO Validate how to responde with errors
         return self._parse_response(response, action)
 
     def update(self, resource_id: str, data: BaseModel):

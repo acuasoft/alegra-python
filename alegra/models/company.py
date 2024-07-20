@@ -3,6 +3,8 @@ from typing import Dict, Optional
 
 from pydantic import BaseModel, EmailStr, field_validator, model_validator
 
+from .address import Address
+
 IDENTIFICATION_TYPES = [
     "11",
     "12",
@@ -17,13 +19,6 @@ IDENTIFICATION_TYPES = [
     "50",
     "91",
 ]
-
-
-class Address(BaseModel):
-    address: str = ""
-    city: str = ""
-    department: str = ""
-    country: str = ""
 
 
 class Webhook(BaseModel):

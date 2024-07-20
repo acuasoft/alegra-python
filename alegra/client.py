@@ -3,6 +3,7 @@ import requests
 from alegra.config import ApiConfig
 from alegra.models.company import Company
 from alegra.models.dian import DianResource
+from alegra.models.invoice import Invoice, InvoiceResponse
 from alegra.models.payroll import Payroll
 from alegra.models.test_set import TestSet
 from alegra.resources.factory import ResourceFactory
@@ -28,8 +29,16 @@ class ApiClient:
             "company",
             self._request,
             {
-                "get": {"model": Company, "response_key": "company"},
-                "update": {"model": Company, "response_key": "company"},
+                "get": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "company",
+                },
+                "update": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "company",
+                },
             },
         )
         self.companies = ResourceFactory(
@@ -37,10 +46,26 @@ class ApiClient:
             "companies",
             self._request,
             {
-                "create": {"model": Company, "response_key": "company"},
-                "get": {"model": Company, "response_key": "company"},
-                "update": {"model": Company, "response_key": "company"},
-                "list": {"model": Company, "response_key": "companies"},
+                "create": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "company",
+                },
+                "get": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "company",
+                },
+                "update": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "company",
+                },
+                "list": {
+                    "model": Company,
+                    "response_model": Company,
+                    "response_key": "companies",
+                },
             },
         )
         self.payrolls = ResourceFactory(
@@ -69,5 +94,22 @@ class ApiClient:
             {
                 "create": {"model": TestSet, "response_key": "test_set"},
                 "get": {"model": TestSet, "response_key": "test_set"},
+            },
+        )
+        self.invoices = ResourceFactory(
+            self,
+            "invoices",
+            self._request,
+            {
+                "create": {
+                    "model": Invoice,
+                    "response_model": InvoiceResponse,
+                    "response_key": "invoice",
+                },
+                "get": {
+                    "model": Invoice,
+                    "response_model": InvoiceResponse,
+                    "response_key": "invoice",
+                },
             },
         )
