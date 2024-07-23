@@ -35,8 +35,11 @@ class Payment(BaseModel):
 
 
 class DiscountOrCharge(BaseModel):
-    # Define los campos necesarios para los descuentos y cargos aquí
-    pass
+    isCharge: bool
+    reason: str
+    percentageAmount: float
+    amount: float
+    baseAmount: float
 
 
 class TotalAmounts(BaseModel):
