@@ -26,6 +26,8 @@ class Item(BaseModel):
     subtotal: float
     taxAmount: float
     total: float
+    discount:float
+    discountAmount:float
 
 
 class Payment(BaseModel):
