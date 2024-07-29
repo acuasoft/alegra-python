@@ -16,6 +16,12 @@ class Resolution(BaseModel):
     technicalKey: str
 
 
+class Taxes(BaseModel):
+    taxCode: str
+    taxAmount: float
+    taxPercentage: str
+    taxableAmount: float
+
 class Item(BaseModel):
     code: str
     description: str
@@ -28,6 +34,7 @@ class Item(BaseModel):
     total: float
     discount:float
     discountAmount:float
+    taxes: List[Taxes] = []
 
 
 class Payment(BaseModel):
