@@ -22,6 +22,7 @@ class Taxes(BaseModel):
     taxPercentage: str
     taxableAmount: float
 
+
 class Item(BaseModel):
     code: str
     description: str
@@ -32,8 +33,8 @@ class Item(BaseModel):
     subtotal: float
     taxAmount: float
     total: float
-    discount:float
-    discountAmount:float
+    discount: float
+    discountAmount: float
     taxes: List[Taxes] = []
 
 
@@ -101,3 +102,7 @@ class InvoiceResponse(BaseModel):
     xmlFileName: str
     zipFileName: str
     qrCodeContent: str
+
+
+class FileResponse(BaseModel):
+    content: str

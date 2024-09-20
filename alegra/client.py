@@ -3,7 +3,7 @@ import requests
 from alegra.config import ApiConfig
 from alegra.models.company import Company
 from alegra.models.dian import DianResource
-from alegra.models.invoice import Invoice, InvoiceResponse
+from alegra.models.invoice import Invoice, InvoiceResponse, FileResponse
 from alegra.models.payroll import Payroll
 from alegra.models.test_set import TestSet
 from alegra.resources.factory import ResourceFactory
@@ -110,6 +110,12 @@ class ApiClient:
                     "model": Invoice,
                     "response_model": InvoiceResponse,
                     "response_key": "invoice",
+                },
+                "perform__file_xml": {
+                    "model": FileResponse,
+                    "endpoint_suffix": "files/XML",
+                    "response_model": FileResponse,
+                    "response_key": "file",
                 },
             },
         )

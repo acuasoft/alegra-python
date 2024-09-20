@@ -102,7 +102,8 @@ class ApiResource:
             raise NotImplementedError(
                 f"The subaction '{subaction}' is not allowed for {self.endpoint}"
             )
-        endpoint = f"{self.endpoint}/{resource_id}/{subaction}"
+        endpoint_suffix = self.actions_config[action].get("endpoint_suffix", subaction)
+        endpoint = f"{self.endpoint}/{resource_id}/{endpoint_suffix}"
         response = self.request_method(
             self._request_method_for_subaction(subaction),
             endpoint,
