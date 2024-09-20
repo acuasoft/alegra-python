@@ -49,15 +49,28 @@ class ApiResource:
         return self._parse_response(response, action)
 
     def create(self, data: BaseModel):
+        if self.client.async_mode:
+            return self.create_async(data)
+        else:
+            action = "create"
+            if not self._is_action_allowed(action):
+                raise NotImplementedError(
+                    f"The action 'create' is not allowed for {self.endpoint}"
+                )
+            response = self.request_method(
+                "POST", self.endpoint, json=self._prepare_data(data)
+            )
+            return self._parse_response(response, action)
+
+    async def create_async(self, data: BaseModel):
         action = "create"
         if not self._is_action_allowed(action):
             raise NotImplementedError(
                 f"The action 'create' is not allowed for {self.endpoint}"
             )
-        response = self.request_method(
+        response = await self.request_method(
             "POST", self.endpoint, json=self._prepare_data(data)
         )
-        # TODO Validate how to responde with errors
         return self._parse_response(response, action)
 
     def update(self, resource_id: str, data: BaseModel):
