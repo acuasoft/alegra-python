@@ -9,6 +9,7 @@ setup(
     install_requires=[
         "pydantic[email]==2.8.2",
         "requests==2.32.3",
+        "httpx==0.27.2",
     ],
     test_suite="tests",
     python_requires=">=3.6",
