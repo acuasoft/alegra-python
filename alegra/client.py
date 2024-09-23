@@ -1,4 +1,5 @@
 import requests
+import httpx
 
 from alegra.config import ApiConfig
 from alegra.models.company import Company
@@ -10,18 +11,32 @@ from alegra.resources.factory import ResourceFactory
 
 
 class ApiClient:
-    def __init__(self, config: ApiConfig):
+    def __init__(self, config: ApiConfig, async_mode=False):
         self.config = config
-        self.session = requests.Session()
-        self.session.headers.update({"Authorization": f"Bearer {self.config.api_key}"})
         self.base_url = self.config.get_base_url()
+        self.async_mode = async_mode
         self._initialize_resources()
 
-    def _request(self, method, endpoint, **kwargs):
+    async def _async_request(self, method, endpoint, **kwargs):
         url = f"{self.base_url}/{endpoint}"
-        response = self.session.request(method, url, **kwargs)
-        # response.raise_for_status()
-        return response.json()
+        async with httpx.AsyncClient(
+            headers={"Authorization": f"Bearer {self.config.api_key}"}
+        ) as client:
+            response = await client.request(method, url, **kwargs)
+            return response.json()
+
+    def _sync_request(self, method, endpoint, **kwargs):
+        url = f"{self.base_url}/{endpoint}"
+        with requests.Session() as session:
+            session.headers.update({"Authorization": f"Bearer {self.config.api_key}"})
+            response = session.request(method, url, **kwargs)
+            return response.json()
+
+    def _request(self, method, endpoint, **kwargs):
+        if self.async_mode:
+            return self._async_request(method, endpoint, **kwargs)
+        else:
+            return self._sync_request(method, endpoint, **kwargs)
 
     def _initialize_resources(self):
         self.company = ResourceFactory(
