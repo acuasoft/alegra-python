@@ -20,7 +20,7 @@ class ApiClient:
     async def _async_request(self, method, endpoint, **kwargs):
         url = f"{self.base_url}/{endpoint}"
         async with httpx.AsyncClient(
-            headers={"Authorization": f"Bearer {self.config.api_key}"}
+            headers={"Authorization": f"Bearer {self.config.api_key}"}, timeout=30.0
         ) as client:
             response = await client.request(method, url, **kwargs)
             return response.json()
