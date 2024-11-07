@@ -93,13 +93,13 @@ class ApiResource:
         response = self.request_method("DELETE", endpoint)
         return response.status_code == 204
 
-    def list(self):
+    def list(self, params=None):
         action = "list"
         if not self._is_action_allowed(action):
             raise NotImplementedError(
                 f"The action 'list' is not allowed for {self.endpoint}"
             )
-        response = self.request_method("GET", self.endpoint)
+        response = self.request_method("GET", self.endpoint, params=params)
         return [
             self.actions_config[action]["model"].model_validate(item)
             for item in response.get(
