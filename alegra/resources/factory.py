@@ -27,8 +27,8 @@ class ResourceFactory:
     def delete(self, resource_id):
         return self.resource.delete(resource_id)
 
-    def list(self):
-        return self.resource.list()
+    def list(self, params=None):
+        return self.resource.list(params)
 
     def perform_subaction(
         self, resource_id: str, subaction: str, data: BaseModel = None

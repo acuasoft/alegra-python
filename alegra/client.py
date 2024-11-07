@@ -132,5 +132,10 @@ class ApiClient:
                     "response_model": FileResponse,
                     "response_key": "file",
                 },
+                "list": {
+                    "model": InvoiceResponse,
+                    "response_model": InvoiceResponse,
+                    "response_key": "invoices",
+                },
             },
         )
