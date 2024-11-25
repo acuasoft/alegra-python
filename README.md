@@ -169,16 +169,3 @@ except requests.exceptions.RequestException as e:
 ## License
 
 This project is licensed under the MIT License.
-
-````
-
-### Requirements
-
-You should create a `requirements.txt` file with the necessary dependencies for the project:
-
-```plaintext
-pydantic
-requests
-````
-
-This `README.md` file provides an overview of how to use the `ApiClient` to interact with the Alegra API, including creating, retrieving, updating, and listing resources. It also covers handling specific subactions for resources like payrolls.
