@@ -36,6 +36,10 @@ class ApiResource:
 
     def _prepare_data(self, data: BaseModel):
         data = data.model_dump()
+        if "customer" in data:
+            customer_data = data["customer"]
+            if customer_data["dv"] is None:
+                del customer_data["dv"]
         return {k: v for k, v in data.items() if v is not None}
 
     def get(self, resource_id: str):
