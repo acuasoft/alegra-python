@@ -1,9 +1,12 @@
 from setuptools import find_packages, setup
 
+import versioneer
+
 setup(
     name="alegra-e-provider",
     packages=find_packages(include=["alegra", "alegra.*"]),
-    version="0.0.1",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     description="Alegra E-Provider, Python Wrapper for Alegra Electronic Provider API",
     author="Luis Martinez",
     install_requires=[
